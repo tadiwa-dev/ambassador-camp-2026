@@ -153,18 +153,18 @@ export default function AmbassadorSurvey() {
   const progressPercent = (step / (steps.length - 1)) * 100;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 p-4 flex items-center justify-center">
-      <div className="w-full max-w-4xl">
+    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 px-3 py-4 sm:p-4 flex items-center justify-center">
+      <div className="w-full max-w-md sm:max-w-2xl lg:max-w-4xl">
         {/* Progress Bar */}
         {step > 0 && step < steps.length - 1 && (
-          <div className="mb-8">
-            <div className="flex justify-between text-white/70 text-sm mb-2">
+          <div className="mb-4 sm:mb-8">
+            <div className="flex justify-between text-white/70 text-xs sm:text-sm mb-2">
               <span>Progress</span>
               <span>{Math.round(progressPercent)}%</span>
             </div>
-            <div className="w-full bg-white/20 rounded-full h-2">
+            <div className="w-full bg-white/20 rounded-full h-1.5 sm:h-2">
               <div
-                className="bg-gradient-to-r from-yellow-400 to-orange-500 h-2 rounded-full transition-all duration-500 ease-out"
+                className="bg-gradient-to-r from-yellow-400 to-orange-500 h-1.5 sm:h-2 rounded-full transition-all duration-500 ease-out"
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
@@ -172,58 +172,56 @@ export default function AmbassadorSurvey() {
         )}
 
         {/* Main Card */}
-        <div className="bg-white/95 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden">
+        <div className="bg-white/95 backdrop-blur-lg rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden">
           <div className="relative">
-            {/* Header Gradient */}
-            <div className="h-32 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 relative overflow-hidden">
+            {/* Header Gradient - Made shorter on mobile */}
+            <div className="h-24 sm:h-32 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 relative overflow-hidden">
               <div className="absolute inset-0 bg-black/20"></div>
               <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full"></div>
               <div className="absolute -bottom-5 -left-5 w-24 h-24 bg-white/10 rounded-full"></div>
-              <div className="relative z-10 p-8 text-white">
-                <h1 className="text-3xl font-black tracking-tight">
+              <div className="relative z-10 p-4 sm:p-8 text-white">
+                <h1 className="text-xl sm:text-3xl font-black tracking-tight leading-tight">
                   Ambassador Camp 2026
                 </h1>
-                <p className="text-white/90 mt-2 font-medium">
+                <p className="text-white/90 mt-1 sm:mt-2 font-medium text-sm sm:text-base">
                   Your Mission Journey ✨ Shape a Spirit-filled experience
                 </p>
               </div>
             </div>
 
-            {/* Content */}
-            <div className="p-8">
+            {/* Content - Better mobile padding */}
+            <div className="p-4 sm:p-6 lg:p-8">
               {step === 0 && (
-                <div className="text-center space-y-8 animate-fade-in">
-                  <div className="w-24 h-24 mx-auto rounded-full flex items-center justify-center shadow-lg overflow-hidden bg-white">
-                    {/* Replace the src with your logo URL */}
+                <div className="text-center space-y-6 sm:space-y-8 animate-fade-in">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto rounded-full flex items-center justify-center shadow-lg overflow-hidden bg-white">
                     <img
                       src="https://sidadventist.org/wp-content/uploads/2021/06/Ambassador_logo.png"
                       alt="Ambassador Camp Logo"
-                      className="w-20 h-20 object-contain"
+                      className="w-16 h-16 sm:w-20 sm:h-20 object-contain"
                       onError={(e) => {
-                        // Fallback to star icon if logo fails to load
                         e.target.style.display = "none";
                         e.target.nextElementSibling.style.display = "flex";
                       }}
                     />
-                    <div className="w-20 h-20 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full items-center justify-center shadow-lg hidden">
-                      <Star className="w-10 h-10 text-white" />
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full items-center justify-center shadow-lg hidden">
+                      <Star className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
                     </div>
                   </div>
 
-                  <div className="space-y-4">
-                    <h2 className="text-3xl font-bold text-gray-800">
+                  <div className="space-y-3 sm:space-y-4">
+                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 leading-tight">
                       Welcome, Ambassador! 🌍
                     </h2>
-                    <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                    <p className="text-lg sm:text-xl text-gray-600 mx-auto leading-relaxed px-2">
                       Imagine preparing for a divine mission. Your choices will
                       shape an unforgettable camp experience that glorifies God
                       and transforms lives.
                     </p>
                   </div>
 
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+                  <div className="flex flex-col gap-3 sm:gap-4 pt-4">
                     <button
-                      className="group px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center space-x-2"
+                      className="group w-full px-6 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl sm:rounded-2xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center space-x-2"
                       onClick={next}
                     >
                       <span>Start Mission</span>
@@ -231,7 +229,7 @@ export default function AmbassadorSurvey() {
                     </button>
 
                     <button
-                      className="px-8 py-4 border-2 border-gray-300 text-gray-700 rounded-2xl font-semibold hover:border-indigo-400 hover:text-indigo-600 transition-all duration-300"
+                      className="w-full px-6 py-4 border-2 border-gray-300 text-gray-700 rounded-xl sm:rounded-2xl font-semibold hover:border-indigo-400 hover:text-indigo-600 transition-all duration-300"
                       onClick={() =>
                         alert("Share this link with your youth groups!")
                       }
@@ -243,28 +241,28 @@ export default function AmbassadorSurvey() {
               )}
 
               {step === 1 && (
-                <div className="space-y-6 animate-slide-in">
-                  <div className="text-center mb-8">
-                    <div className="w-16 h-16 mx-auto bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg">
-                      <Users className="w-8 h-8 text-white" />
+                <div className="space-y-4 sm:space-y-6 animate-slide-in">
+                  <div className="text-center mb-6 sm:mb-8">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 shadow-lg">
+                      <Users className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                     </div>
-                    <h2 className="text-2xl font-bold text-gray-800">
+                    <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
                       Your Identity
                     </h2>
-                    <p className="text-gray-600 mt-2">
+                    <p className="text-gray-600 mt-2 text-sm sm:text-base">
                       Tell us a bit about yourself
                     </p>
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="space-y-3">
-                      <label className="text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                  <div className="space-y-4 sm:space-y-6">
+                    <div className="space-y-2 sm:space-y-3">
+                      <label className="text-xs sm:text-sm font-semibold text-gray-700 uppercase tracking-wide">
                         Age
                       </label>
                       <select
                         value={answers.age}
                         onChange={(e) => update("age", e.target.value)}
-                        className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-indigo-500 focus:ring-0 transition-colors font-medium"
+                        className="w-full p-4 border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:border-indigo-500 focus:ring-0 transition-colors font-medium text-base"
                       >
                         <option value="">Select your age</option>
                         {[16, 17, 18, 19, 20, 21].map((a) => (
@@ -275,14 +273,14 @@ export default function AmbassadorSurvey() {
                       </select>
                     </div>
 
-                    <div className="space-y-3">
-                      <label className="text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                    <div className="space-y-2 sm:space-y-3">
+                      <label className="text-xs sm:text-sm font-semibold text-gray-700 uppercase tracking-wide">
                         Gender
                       </label>
                       <select
                         value={answers.gender}
                         onChange={(e) => update("gender", e.target.value)}
-                        className="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-indigo-500 focus:ring-0 transition-colors font-medium"
+                        className="w-full p-4 border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:border-indigo-500 focus:ring-0 transition-colors font-medium text-base"
                       >
                         <option value="">Prefer not to say</option>
                         <option>Male</option>
@@ -291,40 +289,40 @@ export default function AmbassadorSurvey() {
                     </div>
                   </div>
 
-                  <div className="flex justify-between pt-8">
+                  <div className="flex justify-between pt-6 sm:pt-8">
                     <button
                       onClick={prev}
-                      className="flex items-center space-x-2 px-6 py-3 border-2 border-gray-300 rounded-2xl font-semibold text-gray-700 hover:border-gray-400 transition-colors"
+                      className="flex items-center space-x-2 px-4 sm:px-6 py-3 border-2 border-gray-300 rounded-xl sm:rounded-2xl font-semibold text-gray-700 hover:border-gray-400 transition-colors"
                     >
-                      <ChevronLeft className="w-5 h-5" />
-                      <span>Back</span>
+                      <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <span className="text-sm sm:text-base">Back</span>
                     </button>
                     <button
                       onClick={next}
-                      className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                      className="flex items-center space-x-2 px-4 sm:px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl sm:rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
                     >
-                      <span>Next</span>
-                      <ChevronRight className="w-5 h-5" />
+                      <span className="text-sm sm:text-base">Next</span>
+                      <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
                     </button>
                   </div>
                 </div>
               )}
 
               {step === 2 && (
-                <div className="space-y-6 animate-slide-in">
-                  <div className="text-center mb-8">
-                    <div className="w-16 h-16 mx-auto bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg">
-                      <Heart className="w-8 h-8 text-white" />
+                <div className="space-y-4 sm:space-y-6 animate-slide-in">
+                  <div className="text-center mb-6 sm:mb-8">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 shadow-lg">
+                      <Heart className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                     </div>
-                    <h2 className="text-2xl font-bold text-gray-800">
+                    <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
                       Spiritual Training
                     </h2>
-                    <p className="text-gray-600 mt-2">
+                    <p className="text-gray-600 mt-2 text-sm sm:text-base px-2">
                       Which areas would help you grow spiritually?
                     </p>
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div className="space-y-3 sm:space-y-4">
                     {[
                       {
                         k: "study",
@@ -349,14 +347,14 @@ export default function AmbassadorSurvey() {
                     ].map((item) => (
                       <label
                         key={item.k}
-                        className={`group cursor-pointer p-6 border-2 rounded-2xl transition-all duration-300 ${
+                        className={`group cursor-pointer p-4 sm:p-6 border-2 rounded-xl sm:rounded-2xl transition-all duration-300 block ${
                           answers.spiritual.includes(item.k)
-                            ? "border-emerald-500 bg-emerald-50 shadow-lg transform scale-105"
-                            : "border-gray-200 hover:border-emerald-300 hover:shadow-md"
+                            ? "border-emerald-500 bg-emerald-50 shadow-lg transform scale-[1.02]"
+                            : "border-gray-200 hover:border-emerald-300 hover:shadow-md active:scale-[0.98]"
                         }`}
                       >
-                        <div className="flex items-center space-x-4">
-                          <div className="text-2xl">{item.icon}</div>
+                        <div className="flex items-center space-x-3 sm:space-x-4">
+                          <div className="text-xl sm:text-2xl">{item.icon}</div>
                           <div className="flex-1">
                             <input
                               type="checkbox"
@@ -364,21 +362,19 @@ export default function AmbassadorSurvey() {
                               onChange={() => toggleArray("spiritual", item.k)}
                               className="sr-only"
                             />
-                            <span className="font-semibold text-gray-800">
+                            <span className="font-semibold text-gray-800 text-sm sm:text-base leading-tight">
                               {item.t}
                             </span>
                           </div>
                           <div
-                            className={`w-6 h-6 rounded-full border-2 transition-all ${
+                            className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 transition-all flex items-center justify-center ${
                               answers.spiritual.includes(item.k)
                                 ? "border-emerald-500 bg-emerald-500"
                                 : "border-gray-300"
                             }`}
                           >
                             {answers.spiritual.includes(item.k) && (
-                              <div className="w-full h-full flex items-center justify-center">
-                                <div className="w-2 h-2 bg-white rounded-full"></div>
-                              </div>
+                              <div className="w-2 h-2 bg-white rounded-full"></div>
                             )}
                           </div>
                         </div>
@@ -386,8 +382,8 @@ export default function AmbassadorSurvey() {
                     ))}
                   </div>
 
-                  <div className="text-center p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl">
-                    <p className="italic text-indigo-800 font-medium">
+                  <div className="text-center p-3 sm:p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl sm:rounded-2xl">
+                    <p className="italic text-indigo-800 font-medium text-sm sm:text-base">
                       "Always be prepared to give an answer..." — 1 Peter 3:15
                     </p>
                   </div>
@@ -395,37 +391,37 @@ export default function AmbassadorSurvey() {
                   <div className="flex justify-between pt-4">
                     <button
                       onClick={prev}
-                      className="flex items-center space-x-2 px-6 py-3 border-2 border-gray-300 rounded-2xl font-semibold text-gray-700 hover:border-gray-400 transition-colors"
+                      className="flex items-center space-x-2 px-4 sm:px-6 py-3 border-2 border-gray-300 rounded-xl sm:rounded-2xl font-semibold text-gray-700 hover:border-gray-400 transition-colors"
                     >
-                      <ChevronLeft className="w-5 h-5" />
-                      <span>Back</span>
+                      <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <span className="text-sm sm:text-base">Back</span>
                     </button>
                     <button
                       onClick={next}
-                      className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                      className="flex items-center space-x-2 px-4 sm:px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl sm:rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
                     >
-                      <span>Next</span>
-                      <ChevronRight className="w-5 h-5" />
+                      <span className="text-sm sm:text-base">Next</span>
+                      <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
                     </button>
                   </div>
                 </div>
               )}
 
               {step === 3 && (
-                <div className="space-y-6 animate-slide-in">
-                  <div className="text-center mb-8">
-                    <div className="w-16 h-16 mx-auto bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg">
-                      <span className="text-2xl">🌍</span>
+                <div className="space-y-4 sm:space-y-6 animate-slide-in">
+                  <div className="text-center mb-6 sm:mb-8">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-gradient-to-br from-orange-500 to-red-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 shadow-lg">
+                      <span className="text-xl sm:text-2xl">🌍</span>
                     </div>
-                    <h2 className="text-2xl font-bold text-gray-800">
+                    <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
                       Mission Field
                     </h2>
-                    <p className="text-gray-600 mt-2">
+                    <p className="text-gray-600 mt-2 text-sm sm:text-base px-2">
                       Choose outreach activities you'd join
                     </p>
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div className="space-y-3 sm:space-y-4">
                     {[
                       {
                         k: "sick",
@@ -446,14 +442,14 @@ export default function AmbassadorSurvey() {
                     ].map((item) => (
                       <label
                         key={item.k}
-                        className={`group cursor-pointer p-6 border-2 rounded-2xl transition-all duration-300 ${
+                        className={`group cursor-pointer p-4 sm:p-6 border-2 rounded-xl sm:rounded-2xl transition-all duration-300 block ${
                           answers.mission.includes(item.k)
-                            ? "border-orange-500 bg-orange-50 shadow-lg transform scale-105"
-                            : "border-gray-200 hover:border-orange-300 hover:shadow-md"
+                            ? "border-orange-500 bg-orange-50 shadow-lg transform scale-[1.02]"
+                            : "border-gray-200 hover:border-orange-300 hover:shadow-md active:scale-[0.98]"
                         }`}
                       >
-                        <div className="flex items-center space-x-4">
-                          <div className="text-2xl">{item.icon}</div>
+                        <div className="flex items-center space-x-3 sm:space-x-4">
+                          <div className="text-xl sm:text-2xl">{item.icon}</div>
                           <div className="flex-1">
                             <input
                               type="checkbox"
@@ -461,21 +457,19 @@ export default function AmbassadorSurvey() {
                               onChange={() => toggleArray("mission", item.k)}
                               className="sr-only"
                             />
-                            <span className="font-semibold text-gray-800">
+                            <span className="font-semibold text-gray-800 text-sm sm:text-base leading-tight">
                               {item.t}
                             </span>
                           </div>
                           <div
-                            className={`w-6 h-6 rounded-full border-2 transition-all ${
+                            className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 transition-all flex items-center justify-center ${
                               answers.mission.includes(item.k)
                                 ? "border-orange-500 bg-orange-500"
                                 : "border-gray-300"
                             }`}
                           >
                             {answers.mission.includes(item.k) && (
-                              <div className="w-full h-full flex items-center justify-center">
-                                <div className="w-2 h-2 bg-white rounded-full"></div>
-                              </div>
+                              <div className="w-2 h-2 bg-white rounded-full"></div>
                             )}
                           </div>
                         </div>
@@ -486,37 +480,37 @@ export default function AmbassadorSurvey() {
                   <div className="flex justify-between pt-4">
                     <button
                       onClick={prev}
-                      className="flex items-center space-x-2 px-6 py-3 border-2 border-gray-300 rounded-2xl font-semibold text-gray-700 hover:border-gray-400 transition-colors"
+                      className="flex items-center space-x-2 px-4 sm:px-6 py-3 border-2 border-gray-300 rounded-xl sm:rounded-2xl font-semibold text-gray-700 hover:border-gray-400 transition-colors"
                     >
-                      <ChevronLeft className="w-5 h-5" />
-                      <span>Back</span>
+                      <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <span className="text-sm sm:text-base">Back</span>
                     </button>
                     <button
                       onClick={next}
-                      className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                      className="flex items-center space-x-2 px-4 sm:px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl sm:rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
                     >
-                      <span>Next</span>
-                      <ChevronRight className="w-5 h-5" />
+                      <span className="text-sm sm:text-base">Next</span>
+                      <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
                     </button>
                   </div>
                 </div>
               )}
 
               {step === 4 && (
-                <div className="space-y-6 animate-slide-in">
-                  <div className="text-center mb-8">
-                    <div className="w-16 h-16 mx-auto bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg">
-                      <Zap className="w-8 h-8 text-white" />
+                <div className="space-y-4 sm:space-y-6 animate-slide-in">
+                  <div className="text-center mb-6 sm:mb-8">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 shadow-lg">
+                      <Zap className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                     </div>
-                    <h2 className="text-2xl font-bold text-gray-800">
+                    <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
                       Skills for the Kingdom
                     </h2>
-                    <p className="text-gray-600 mt-2">
+                    <p className="text-gray-600 mt-2 text-sm sm:text-base px-2">
                       Which skills would you like to develop?
                     </p>
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div className="space-y-3 sm:space-y-4">
                     {[
                       {
                         k: "leadership",
@@ -538,14 +532,14 @@ export default function AmbassadorSurvey() {
                     ].map((item) => (
                       <label
                         key={item.k}
-                        className={`group cursor-pointer p-6 border-2 rounded-2xl transition-all duration-300 ${
+                        className={`group cursor-pointer p-4 sm:p-6 border-2 rounded-xl sm:rounded-2xl transition-all duration-300 block ${
                           answers.skills.includes(item.k)
-                            ? "border-purple-500 bg-purple-50 shadow-lg transform scale-105"
-                            : "border-gray-200 hover:border-purple-300 hover:shadow-md"
+                            ? "border-purple-500 bg-purple-50 shadow-lg transform scale-[1.02]"
+                            : "border-gray-200 hover:border-purple-300 hover:shadow-md active:scale-[0.98]"
                         }`}
                       >
-                        <div className="flex items-center space-x-4">
-                          <div className="text-2xl">{item.icon}</div>
+                        <div className="flex items-center space-x-3 sm:space-x-4">
+                          <div className="text-xl sm:text-2xl">{item.icon}</div>
                           <div className="flex-1">
                             <input
                               type="checkbox"
@@ -553,21 +547,19 @@ export default function AmbassadorSurvey() {
                               onChange={() => toggleArray("skills", item.k)}
                               className="sr-only"
                             />
-                            <span className="font-semibold text-gray-800">
+                            <span className="font-semibold text-gray-800 text-sm sm:text-base leading-tight">
                               {item.t}
                             </span>
                           </div>
                           <div
-                            className={`w-6 h-6 rounded-full border-2 transition-all ${
+                            className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 transition-all flex items-center justify-center ${
                               answers.skills.includes(item.k)
                                 ? "border-purple-500 bg-purple-500"
                                 : "border-gray-300"
                             }`}
                           >
                             {answers.skills.includes(item.k) && (
-                              <div className="w-full h-full flex items-center justify-center">
-                                <div className="w-2 h-2 bg-white rounded-full"></div>
-                              </div>
+                              <div className="w-2 h-2 bg-white rounded-full"></div>
                             )}
                           </div>
                         </div>
@@ -578,37 +570,37 @@ export default function AmbassadorSurvey() {
                   <div className="flex justify-between pt-4">
                     <button
                       onClick={prev}
-                      className="flex items-center space-x-2 px-6 py-3 border-2 border-gray-300 rounded-2xl font-semibold text-gray-700 hover:border-gray-400 transition-colors"
+                      className="flex items-center space-x-2 px-4 sm:px-6 py-3 border-2 border-gray-300 rounded-xl sm:rounded-2xl font-semibold text-gray-700 hover:border-gray-400 transition-colors"
                     >
-                      <ChevronLeft className="w-5 h-5" />
-                      <span>Back</span>
+                      <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <span className="text-sm sm:text-base">Back</span>
                     </button>
                     <button
                       onClick={next}
-                      className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                      className="flex items-center space-x-2 px-4 sm:px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl sm:rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
                     >
-                      <span>Next</span>
-                      <ChevronRight className="w-5 h-5" />
+                      <span className="text-sm sm:text-base">Next</span>
+                      <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
                     </button>
                   </div>
                 </div>
               )}
 
               {step === 5 && (
-                <div className="space-y-6 animate-slide-in">
-                  <div className="text-center mb-8">
-                    <div className="w-16 h-16 mx-auto bg-gradient-to-br from-yellow-500 to-orange-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg">
-                      <span className="text-2xl">🎉</span>
+                <div className="space-y-4 sm:space-y-6 animate-slide-in">
+                  <div className="text-center mb-6 sm:mb-8">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-gradient-to-br from-yellow-500 to-orange-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 shadow-lg">
+                      <span className="text-xl sm:text-2xl">🎉</span>
                     </div>
-                    <h2 className="text-2xl font-bold text-gray-800">
+                    <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
                       Fellowship & Fun
                     </h2>
-                    <p className="text-gray-600 mt-2">
+                    <p className="text-gray-600 mt-2 text-sm sm:text-base px-2">
                       Pick the activities you'd love at camp
                     </p>
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div className="space-y-3 sm:space-y-4">
                     {[
                       {
                         k: "sports",
@@ -627,14 +619,14 @@ export default function AmbassadorSurvey() {
                     ].map((item) => (
                       <label
                         key={item.k}
-                        className={`group cursor-pointer p-6 border-2 rounded-2xl transition-all duration-300 ${
+                        className={`group cursor-pointer p-4 sm:p-6 border-2 rounded-xl sm:rounded-2xl transition-all duration-300 block ${
                           answers.fun.includes(item.k)
-                            ? "border-yellow-500 bg-yellow-50 shadow-lg transform scale-105"
-                            : "border-gray-200 hover:border-yellow-300 hover:shadow-md"
+                            ? "border-yellow-500 bg-yellow-50 shadow-lg transform scale-[1.02]"
+                            : "border-gray-200 hover:border-yellow-300 hover:shadow-md active:scale-[0.98]"
                         }`}
                       >
-                        <div className="flex items-center space-x-4">
-                          <div className="text-2xl">{item.icon}</div>
+                        <div className="flex items-center space-x-3 sm:space-x-4">
+                          <div className="text-xl sm:text-2xl">{item.icon}</div>
                           <div className="flex-1">
                             <input
                               type="checkbox"
@@ -642,21 +634,19 @@ export default function AmbassadorSurvey() {
                               onChange={() => toggleArray("fun", item.k)}
                               className="sr-only"
                             />
-                            <span className="font-semibold text-gray-800">
+                            <span className="font-semibold text-gray-800 text-sm sm:text-base leading-tight">
                               {item.t}
                             </span>
                           </div>
                           <div
-                            className={`w-6 h-6 rounded-full border-2 transition-all ${
+                            className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 transition-all flex items-center justify-center ${
                               answers.fun.includes(item.k)
                                 ? "border-yellow-500 bg-yellow-500"
                                 : "border-gray-300"
                             }`}
                           >
                             {answers.fun.includes(item.k) && (
-                              <div className="w-full h-full flex items-center justify-center">
-                                <div className="w-2 h-2 bg-white rounded-full"></div>
-                              </div>
+                              <div className="w-2 h-2 bg-white rounded-full"></div>
                             )}
                           </div>
                         </div>
@@ -667,32 +657,32 @@ export default function AmbassadorSurvey() {
                   <div className="flex justify-between pt-4">
                     <button
                       onClick={prev}
-                      className="flex items-center space-x-2 px-6 py-3 border-2 border-gray-300 rounded-2xl font-semibold text-gray-700 hover:border-gray-400 transition-colors"
+                      className="flex items-center space-x-2 px-4 sm:px-6 py-3 border-2 border-gray-300 rounded-xl sm:rounded-2xl font-semibold text-gray-700 hover:border-gray-400 transition-colors"
                     >
-                      <ChevronLeft className="w-5 h-5" />
-                      <span>Back</span>
+                      <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <span className="text-sm sm:text-base">Back</span>
                     </button>
                     <button
                       onClick={next}
-                      className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                      className="flex items-center space-x-2 px-4 sm:px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl sm:rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
                     >
-                      <span>Next</span>
-                      <ChevronRight className="w-5 h-5" />
+                      <span className="text-sm sm:text-base">Next</span>
+                      <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
                     </button>
                   </div>
                 </div>
               )}
 
               {step === 6 && (
-                <div className="space-y-6 animate-slide-in">
-                  <div className="text-center mb-8">
-                    <div className="w-16 h-16 mx-auto bg-gradient-to-br from-teal-500 to-cyan-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg">
-                      <span className="text-2xl">🎤</span>
+                <div className="space-y-4 sm:space-y-6 animate-slide-in">
+                  <div className="text-center mb-6 sm:mb-8">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 shadow-lg">
+                      <span className="text-xl sm:text-2xl">🎤</span>
                     </div>
-                    <h2 className="text-2xl font-bold text-gray-800">
+                    <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
                       Speakers & Mentors
                     </h2>
-                    <p className="text-gray-600 mt-2">
+                    <p className="text-gray-600 mt-2 text-sm sm:text-base px-2">
                       Any suggested speakers or mentors we should invite?
                     </p>
                   </div>
@@ -702,7 +692,7 @@ export default function AmbassadorSurvey() {
                       value={answers.speakers}
                       onChange={(e) => update("speakers", e.target.value)}
                       placeholder="Names, topics, or 'youth testimonies'..."
-                      className="w-full p-6 border-2 border-gray-200 rounded-2xl focus:border-teal-500 focus:ring-0 transition-colors resize-none font-medium"
+                      className="w-full p-4 sm:p-6 border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:border-teal-500 focus:ring-0 transition-colors resize-none font-medium text-base"
                       rows={4}
                     />
                   </div>
@@ -710,32 +700,32 @@ export default function AmbassadorSurvey() {
                   <div className="flex justify-between pt-4">
                     <button
                       onClick={prev}
-                      className="flex items-center space-x-2 px-6 py-3 border-2 border-gray-300 rounded-2xl font-semibold text-gray-700 hover:border-gray-400 transition-colors"
+                      className="flex items-center space-x-2 px-4 sm:px-6 py-3 border-2 border-gray-300 rounded-xl sm:rounded-2xl font-semibold text-gray-700 hover:border-gray-400 transition-colors"
                     >
-                      <ChevronLeft className="w-5 h-5" />
-                      <span>Back</span>
+                      <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <span className="text-sm sm:text-base">Back</span>
                     </button>
                     <button
                       onClick={next}
-                      className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                      className="flex items-center space-x-2 px-4 sm:px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl sm:rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
                     >
-                      <span>Next</span>
-                      <ChevronRight className="w-5 h-5" />
+                      <span className="text-sm sm:text-base">Next</span>
+                      <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
                     </button>
                   </div>
                 </div>
               )}
 
               {step === 7 && (
-                <div className="space-y-6 animate-slide-in">
-                  <div className="text-center mb-8">
-                    <div className="w-16 h-16 mx-auto bg-gradient-to-br from-pink-500 to-rose-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg">
-                      <span className="text-2xl">🌟</span>
+                <div className="space-y-4 sm:space-y-6 animate-slide-in">
+                  <div className="text-center mb-6 sm:mb-8">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-gradient-to-br from-pink-500 to-rose-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 shadow-lg">
+                      <span className="text-xl sm:text-2xl">🌟</span>
                     </div>
-                    <h2 className="text-2xl font-bold text-gray-800">
+                    <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
                       Your Hope
                     </h2>
-                    <p className="text-gray-600 mt-2">
+                    <p className="text-gray-600 mt-2 text-sm sm:text-base px-2">
                       What do you personally hope to gain from Ambassador Camp
                       2026?
                     </p>
@@ -746,7 +736,7 @@ export default function AmbassadorSurvey() {
                       value={answers.hope}
                       onChange={(e) => update("hope", e.target.value)}
                       placeholder="Share your hopes and expectations..."
-                      className="w-full p-6 border-2 border-gray-200 rounded-2xl focus:border-pink-500 focus:ring-0 transition-colors resize-none font-medium"
+                      className="w-full p-4 sm:p-6 border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:border-pink-500 focus:ring-0 transition-colors resize-none font-medium text-base"
                       rows={4}
                     />
                   </div>
@@ -754,25 +744,25 @@ export default function AmbassadorSurvey() {
                   <div className="flex justify-between pt-4">
                     <button
                       onClick={prev}
-                      className="flex items-center space-x-2 px-6 py-3 border-2 border-gray-300 rounded-2xl font-semibold text-gray-700 hover:border-gray-400 transition-colors"
+                      className="flex items-center space-x-2 px-4 sm:px-6 py-3 border-2 border-gray-300 rounded-xl sm:rounded-2xl font-semibold text-gray-700 hover:border-gray-400 transition-colors"
                     >
-                      <ChevronLeft className="w-5 h-5" />
-                      <span>Back</span>
+                      <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <span className="text-sm sm:text-base">Back</span>
                     </button>
                     <button
                       onClick={handleSubmit}
                       disabled={isSubmitting}
-                      className="flex items-center space-x-2 px-8 py-3 bg-gradient-to-r from-emerald-600 to-green-600 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex items-center space-x-2 px-6 sm:px-8 py-3 bg-gradient-to-r from-emerald-600 to-green-600 text-white rounded-xl sm:rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {isSubmitting ? (
                         <>
-                          <div className="animate-spin w-5 h-5 border-2 border-white border-t-transparent rounded-full"></div>
-                          <span>Submitting...</span>
+                          <div className="animate-spin w-4 h-4 sm:w-5 sm:h-5 border-2 border-white border-t-transparent rounded-full"></div>
+                          <span className="text-sm sm:text-base">Submitting...</span>
                         </>
                       ) : (
                         <>
-                          <Send className="w-5 h-5" />
-                          <span>Submit Mission</span>
+                          <Send className="w-4 h-4 sm:w-5 sm:h-5" />
+                          <span className="text-sm sm:text-base">Submit Mission</span>
                         </>
                       )}
                     </button>
@@ -781,16 +771,16 @@ export default function AmbassadorSurvey() {
               )}
 
               {step === steps.indexOf("finish") && (
-                <div className="text-center space-y-8 animate-fade-in">
-                  <div className="w-24 h-24 mx-auto bg-gradient-to-br from-emerald-400 to-green-500 rounded-full flex items-center justify-center shadow-xl">
-                    <Award className="w-12 h-12 text-white" />
+                <div className="text-center space-y-6 sm:space-y-8 animate-fade-in">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto bg-gradient-to-br from-emerald-400 to-green-500 rounded-full flex items-center justify-center shadow-xl">
+                    <Award className="w-10 h-10 sm:w-12 sm:h-12 text-white" />
                   </div>
 
-                  <div className="space-y-4">
-                    <h2 className="text-3xl font-bold text-gray-800">
+                  <div className="space-y-3 sm:space-y-4">
+                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-800">
                       Mission Accepted! 🎉
                     </h2>
-                    <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                    <p className="text-lg sm:text-xl text-gray-600 mx-auto leading-relaxed px-2">
                       Thank you, Ambassador. Your answers will help us build a
                       camp that glorifies God and equips us for His mission.
                     </p>
@@ -798,16 +788,16 @@ export default function AmbassadorSurvey() {
 
                   {badge && (
                     <div className="space-y-4">
-                      <p className="text-lg font-semibold text-gray-800">
+                      <p className="text-base sm:text-lg font-semibold text-gray-800">
                         Your Ambassador Badge:
                       </p>
-                      <div className="inline-block p-2 bg-white rounded-3xl shadow-2xl">
+                      <div className="inline-block p-2 bg-white rounded-2xl sm:rounded-3xl shadow-2xl">
                         <svg
-                          width="280"
-                          height="160"
+                          width="260"
+                          height="150"
                           viewBox="0 0 280 160"
                           xmlns="http://www.w3.org/2000/svg"
-                          className="rounded-2xl"
+                          className="rounded-xl sm:rounded-2xl max-w-full h-auto"
                         >
                           <defs>
                             <linearGradient
@@ -873,16 +863,16 @@ export default function AmbassadorSurvey() {
                           </text>
                         </svg>
                       </div>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-xs sm:text-sm text-gray-500 px-2">
                         Right-click the badge to save or take a screenshot to
                         share!
                       </p>
                     </div>
                   )}
 
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+                  <div className="flex flex-col gap-3 sm:gap-4 pt-4">
                     <button
-                      className="px-8 py-4 border-2 border-gray-300 text-gray-700 rounded-2xl font-semibold hover:border-indigo-400 hover:text-indigo-600 transition-all duration-300"
+                      className="w-full px-6 py-4 border-2 border-gray-300 text-gray-700 rounded-xl sm:rounded-2xl font-semibold hover:border-indigo-400 hover:text-indigo-600 transition-all duration-300"
                       onClick={() => {
                         setStep(1);
                         setBadge(null);
@@ -891,7 +881,7 @@ export default function AmbassadorSurvey() {
                       Edit Answers
                     </button>
                     <button
-                      className={`px-8 py-4 rounded-2xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 ${
+                      className={`w-full px-6 py-4 rounded-xl sm:rounded-2xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 ${
                         answers.prizeDrawEntry
                           ? "bg-gradient-to-r from-green-500 to-emerald-500 text-white"
                           : "bg-gradient-to-r from-yellow-500 to-orange-500 text-white"
@@ -913,7 +903,7 @@ export default function AmbassadorSurvey() {
             </div>
 
             {/* Footer */}
-            <div className="px-8 py-6 bg-gray-50 border-t">
+            <div className="px-4 sm:px-8 py-4 sm:py-6 bg-gray-50 border-t">
               <p className="text-xs text-gray-500 text-center">
                 Made with ❤️ by Tadiwa Matewe
               </p>
@@ -951,6 +941,18 @@ export default function AmbassadorSurvey() {
 
         .animate-slide-in {
           animation: slide-in 0.5s ease-out;
+        }
+
+        /* Ensure proper touch targets on mobile */
+        @media (max-width: 640px) {
+          button, select, textarea, input[type="checkbox"] + * {
+            min-height: 44px;
+          }
+          
+          /* Improve text readability on mobile */
+          * {
+            -webkit-tap-highlight-color: transparent;
+          }
         }
       `}</style>
     </div>
