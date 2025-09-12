@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "builds": [
     {
@@ -7,3 +8,14 @@
     }
   ]
 }
+=======
+{
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "build" }
+    }
+  ]
+}
+>>>>>>> d14db5fee22c24a1ee0c1e01b85af60461c08591
