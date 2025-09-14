@@ -11,25 +11,38 @@ import {
 } from "lucide-react";
 
 const SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbxLXR-fsnJTdq8QjES3VBoDHnhlydD1qF6muQY_-9s0w1601Jv8Sa8WQNMCujz7ZV8/exec";
+  "https://script.google.com/macros/s/AKfycbxGGPvmk_7rcZH-tIi2ob0FVKgj2mCdk6e48TE-4jlEtWeMAfJSq3QrwORWhALKSxI/exec";
 
 export default function AmbassadorSurvey() {
   const initial = {
     age: "",
     gender: "",
+    federation: "",
+    hobbies: "",
+    interests: "",
+    sportingActivity: "",
     spiritual: [],
     mission: [],
     skills: [],
     fun: [],
     speakers: "",
+    programItems: "",
+    lifeSkills: [],
     hope: "",
+    otherIssues: "",
+    prizeDrawEntry: false,
   };
 
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState(() => {
     try {
       const stored = window.localStorage?.getItem("ambassador_answers");
-      return stored ? JSON.parse(stored) : initial;
+      if (stored) {
+        const parsedStored = JSON.parse(stored);
+        // Merge stored data with initial to ensure all fields exist
+        return { ...initial, ...parsedStored };
+      }
+      return initial;
     } catch (e) {
       return initial;
     }
@@ -40,11 +53,13 @@ export default function AmbassadorSurvey() {
   const steps = [
     "intro",
     "identity",
+    "hobbies",
     "spiritual",
     "mission",
     "skills",
     "fun",
     "speakers",
+    "lifeSkills",
     "hope",
     "finish",
   ];
@@ -93,15 +108,15 @@ export default function AmbassadorSurvey() {
   function computeBadge(ans) {
     const counts = {
       Worshipper:
-        ans.fun.includes("singing") || ans.skills.includes("music") ? 1 : 0,
+        (ans.fun || []).includes("singing") || (ans.skills || []).includes("music") ? 1 : 0,
       Trailblazer:
-        ans.mission.length >= 2 || ans.skills.includes("leadership") ? 1 : 0,
+        (ans.mission || []).length >= 2 || (ans.skills || []).includes("leadership") ? 1 : 0,
       Witness:
-        ans.spiritual.includes("share") || ans.skills.includes("speaking")
+        (ans.spiritual || []).includes("share") || (ans.skills || []).includes("speaking")
           ? 1
           : 0,
       Builder:
-        ans.skills.includes("media") || ans.mission.includes("cleanup") ? 1 : 0,
+        (ans.skills || []).includes("media") || (ans.mission || []).includes("cleanup") ? 1 : 0,
     };
     const winner = Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
     return winner;
@@ -115,12 +130,20 @@ export default function AmbassadorSurvey() {
     const payload = {
       age: answers.age,
       gender: answers.gender,
+      federation: answers.federation,
+      hobbies: answers.hobbies,
+      interests: answers.interests,
+      sportingActivity: answers.sportingActivity,
       spiritual: answers.spiritual,
       mission: answers.mission,
       skills: answers.skills,
       fun: answers.fun,
       speakers: answers.speakers,
+      programItems: answers.programItems,
+      lifeSkills: answers.lifeSkills,
       hope: answers.hope,
+      otherIssues: answers.otherIssues,
+      prizeDrawEntry: answers.prizeDrawEntry,
       badge: generatedBadge,
       _secret: "NOZIPHO",
     };
@@ -174,17 +197,18 @@ export default function AmbassadorSurvey() {
         {/* Main Card */}
         <div className="bg-white/95 backdrop-blur-lg rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden">
           <div className="relative">
-            {/* Header Gradient - Made shorter on mobile */}
-            <div className="h-24 sm:h-32 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 relative overflow-hidden">
+            {/* Header Gradient - Mobile optimized */}
+            <div className="min-h-[6rem] sm:h-32 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 relative overflow-hidden">
               <div className="absolute inset-0 bg-black/20"></div>
               <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full"></div>
               <div className="absolute -bottom-5 -left-5 w-24 h-24 bg-white/10 rounded-full"></div>
-              <div className="relative z-10 p-4 sm:p-8 text-white">
-                <h1 className="text-xl sm:text-3xl font-black tracking-tight leading-tight">
+              <div className="relative z-10 p-3 sm:p-8 text-white flex flex-col justify-center min-h-[6rem] sm:min-h-[8rem]">
+                <h1 className="text-lg sm:text-3xl font-black tracking-tight leading-tight">
                   Ambassador Camp 2026
                 </h1>
-                <p className="text-white/90 mt-1 sm:mt-2 font-medium text-sm sm:text-base">
-                  Your Mission Journey ✨ Shape a Spirit-filled experience
+                <p className="text-white/90 mt-1 sm:mt-2 font-medium text-xs sm:text-base leading-tight">
+                  Your Mission Journey ✨<br className="sm:hidden" />
+                  <span className="sm:ml-1">Shape a Spirit-filled experience</span>
                 </p>
               </div>
             </div>
@@ -287,6 +311,36 @@ export default function AmbassadorSurvey() {
                         <option>Female</option>
                       </select>
                     </div>
+
+                    <div className="space-y-2 sm:space-y-3">
+                      <label className="text-xs sm:text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                        Federation
+                      </label>
+                      <select
+                        value={answers.federation}
+                        onChange={(e) => update("federation", e.target.value)}
+                        className="w-full p-4 border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:border-indigo-500 focus:ring-0 transition-colors font-medium text-base"
+                      >
+                        <option value="">Select your federation</option>
+                        <option>CENTRINORTH</option>
+                        <option>CHIREMBA</option>
+                        <option>CHISE</option>
+                        <option>CHITWEST</option>
+                        <option>CHIVHUWEST</option>
+                        <option>GLENSEC</option>
+                        <option>GLENCITY</option>
+                        <option>WHAPP</option>
+                        <option>MAROCHEK</option>
+                        <option>EMA</option>
+                        <option>MULTICULTURAL</option>
+                        <option>ZIMDAG</option>
+                        <option>RUCHI</option>
+                        <option>SOUTHERN HARARE</option>
+                        <option>STONEVIEW</option>
+                        <option>NYAHUNI</option>
+                        <option>Other</option>
+                      </select>
+                    </div>
                   </div>
 
                   <div className="flex justify-between pt-6 sm:pt-8">
@@ -309,6 +363,93 @@ export default function AmbassadorSurvey() {
               )}
 
               {step === 2 && (
+                <div className="space-y-4 sm:space-y-6 animate-slide-in">
+                  <div className="text-center mb-6 sm:mb-8">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 shadow-lg">
+                      <span className="text-xl sm:text-2xl">🎯</span>
+                    </div>
+                    <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
+                      Your Interests
+                    </h2>
+                    <p className="text-gray-600 mt-2 text-sm sm:text-base px-2">
+                      Tell us about your hobbies and activities
+                    </p>
+                  </div>
+
+                  <div className="space-y-4 sm:space-y-6">
+                    <div className="space-y-2 sm:space-y-3">
+                      <label className="text-xs sm:text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                        Hobbies
+                      </label>
+                      <textarea
+                        value={answers.hobbies}
+                        onChange={(e) => update("hobbies", e.target.value)}
+                        placeholder="What do you enjoy doing in your free time? (e.g., reading, cooking, gaming, art, etc.)"
+                        className="w-full p-4 border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:border-cyan-500 focus:ring-0 transition-colors resize-none font-medium text-base"
+                        rows={3}
+                      />
+                    </div>
+
+                    <div className="space-y-2 sm:space-y-3">
+                      <label className="text-xs sm:text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                        Interests
+                      </label>
+                      <textarea
+                        value={answers.interests}
+                        onChange={(e) => update("interests", e.target.value)}
+                        placeholder="What topics or areas are you passionate about? (e.g., technology, nature, music, social justice, etc.)"
+                        className="w-full p-4 border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:border-cyan-500 focus:ring-0 transition-colors resize-none font-medium text-base"
+                        rows={3}
+                      />
+                    </div>
+
+                    <div className="space-y-2 sm:space-y-3">
+                      <label className="text-xs sm:text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                        Sporting Activity
+                      </label>
+                      <select
+                        value={answers.sportingActivity}
+                        onChange={(e) => update("sportingActivity", e.target.value)}
+                        className="w-full p-4 border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:border-cyan-500 focus:ring-0 transition-colors font-medium text-base"
+                      >
+                        <option value="">Select your preferred sport</option>
+                        <option>Soccer/Football</option>
+                        <option>Basketball</option>
+                        <option>Volleyball</option>
+                        <option>Tennis</option>
+                        <option>Swimming</option>
+                        <option>Running/Athletics</option>
+                        <option>Cricket</option>
+                        <option>Rugby</option>
+                        <option>Netball</option>
+                        <option>Hiking/Walking</option>
+                        <option>Cycling</option>
+                        <option>Other</option>
+                        <option>Not interested in sports</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between pt-6 sm:pt-8">
+                    <button
+                      onClick={prev}
+                      className="flex items-center space-x-2 px-4 sm:px-6 py-3 border-2 border-gray-300 rounded-xl sm:rounded-2xl font-semibold text-gray-700 hover:border-gray-400 transition-colors"
+                    >
+                      <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <span className="text-sm sm:text-base">Back</span>
+                    </button>
+                    <button
+                      onClick={next}
+                      className="flex items-center space-x-2 px-4 sm:px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl sm:rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                    >
+                      <span className="text-sm sm:text-base">Next</span>
+                      <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {step === 3 && (
                 <div className="space-y-4 sm:space-y-6 animate-slide-in">
                   <div className="text-center mb-6 sm:mb-8">
                     <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 shadow-lg">
@@ -348,7 +489,7 @@ export default function AmbassadorSurvey() {
                       <label
                         key={item.k}
                         className={`group cursor-pointer p-4 sm:p-6 border-2 rounded-xl sm:rounded-2xl transition-all duration-300 block ${
-                          answers.spiritual.includes(item.k)
+                          (answers.spiritual || []).includes(item.k)
                             ? "border-emerald-500 bg-emerald-50 shadow-lg transform scale-[1.02]"
                             : "border-gray-200 hover:border-emerald-300 hover:shadow-md active:scale-[0.98]"
                         }`}
@@ -358,7 +499,7 @@ export default function AmbassadorSurvey() {
                           <div className="flex-1">
                             <input
                               type="checkbox"
-                              checked={answers.spiritual.includes(item.k)}
+                              checked={(answers.spiritual || []).includes(item.k)}
                               onChange={() => toggleArray("spiritual", item.k)}
                               className="sr-only"
                             />
@@ -368,12 +509,12 @@ export default function AmbassadorSurvey() {
                           </div>
                           <div
                             className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 transition-all flex items-center justify-center ${
-                              answers.spiritual.includes(item.k)
+                              (answers.spiritual || []).includes(item.k)
                                 ? "border-emerald-500 bg-emerald-500"
                                 : "border-gray-300"
                             }`}
                           >
-                            {answers.spiritual.includes(item.k) && (
+                            {(answers.spiritual || []).includes(item.k) && (
                               <div className="w-2 h-2 bg-white rounded-full"></div>
                             )}
                           </div>
@@ -407,7 +548,7 @@ export default function AmbassadorSurvey() {
                 </div>
               )}
 
-              {step === 3 && (
+              {step === 4 && (
                 <div className="space-y-4 sm:space-y-6 animate-slide-in">
                   <div className="text-center mb-6 sm:mb-8">
                     <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-gradient-to-br from-orange-500 to-red-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 shadow-lg">
@@ -443,7 +584,7 @@ export default function AmbassadorSurvey() {
                       <label
                         key={item.k}
                         className={`group cursor-pointer p-4 sm:p-6 border-2 rounded-xl sm:rounded-2xl transition-all duration-300 block ${
-                          answers.mission.includes(item.k)
+                          (answers.mission || []).includes(item.k)
                             ? "border-orange-500 bg-orange-50 shadow-lg transform scale-[1.02]"
                             : "border-gray-200 hover:border-orange-300 hover:shadow-md active:scale-[0.98]"
                         }`}
@@ -453,7 +594,7 @@ export default function AmbassadorSurvey() {
                           <div className="flex-1">
                             <input
                               type="checkbox"
-                              checked={answers.mission.includes(item.k)}
+                              checked={(answers.mission || []).includes(item.k)}
                               onChange={() => toggleArray("mission", item.k)}
                               className="sr-only"
                             />
@@ -463,12 +604,12 @@ export default function AmbassadorSurvey() {
                           </div>
                           <div
                             className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 transition-all flex items-center justify-center ${
-                              answers.mission.includes(item.k)
+                              (answers.mission || []).includes(item.k)
                                 ? "border-orange-500 bg-orange-500"
                                 : "border-gray-300"
                             }`}
                           >
-                            {answers.mission.includes(item.k) && (
+                            {(answers.mission || []).includes(item.k) && (
                               <div className="w-2 h-2 bg-white rounded-full"></div>
                             )}
                           </div>
@@ -496,7 +637,7 @@ export default function AmbassadorSurvey() {
                 </div>
               )}
 
-              {step === 4 && (
+              {step === 5 && (
                 <div className="space-y-4 sm:space-y-6 animate-slide-in">
                   <div className="text-center mb-6 sm:mb-8">
                     <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 shadow-lg">
@@ -533,7 +674,7 @@ export default function AmbassadorSurvey() {
                       <label
                         key={item.k}
                         className={`group cursor-pointer p-4 sm:p-6 border-2 rounded-xl sm:rounded-2xl transition-all duration-300 block ${
-                          answers.skills.includes(item.k)
+                          (answers.skills || []).includes(item.k)
                             ? "border-purple-500 bg-purple-50 shadow-lg transform scale-[1.02]"
                             : "border-gray-200 hover:border-purple-300 hover:shadow-md active:scale-[0.98]"
                         }`}
@@ -543,7 +684,7 @@ export default function AmbassadorSurvey() {
                           <div className="flex-1">
                             <input
                               type="checkbox"
-                              checked={answers.skills.includes(item.k)}
+                              checked={(answers.skills || []).includes(item.k)}
                               onChange={() => toggleArray("skills", item.k)}
                               className="sr-only"
                             />
@@ -553,12 +694,12 @@ export default function AmbassadorSurvey() {
                           </div>
                           <div
                             className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 transition-all flex items-center justify-center ${
-                              answers.skills.includes(item.k)
+                              (answers.skills || []).includes(item.k)
                                 ? "border-purple-500 bg-purple-500"
                                 : "border-gray-300"
                             }`}
                           >
-                            {answers.skills.includes(item.k) && (
+                            {(answers.skills || []).includes(item.k) && (
                               <div className="w-2 h-2 bg-white rounded-full"></div>
                             )}
                           </div>
@@ -586,7 +727,7 @@ export default function AmbassadorSurvey() {
                 </div>
               )}
 
-              {step === 5 && (
+              {step === 6 && (
                 <div className="space-y-4 sm:space-y-6 animate-slide-in">
                   <div className="text-center mb-6 sm:mb-8">
                     <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-gradient-to-br from-yellow-500 to-orange-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 shadow-lg">
@@ -620,7 +761,7 @@ export default function AmbassadorSurvey() {
                       <label
                         key={item.k}
                         className={`group cursor-pointer p-4 sm:p-6 border-2 rounded-xl sm:rounded-2xl transition-all duration-300 block ${
-                          answers.fun.includes(item.k)
+                          (answers.fun || []).includes(item.k)
                             ? "border-yellow-500 bg-yellow-50 shadow-lg transform scale-[1.02]"
                             : "border-gray-200 hover:border-yellow-300 hover:shadow-md active:scale-[0.98]"
                         }`}
@@ -630,7 +771,7 @@ export default function AmbassadorSurvey() {
                           <div className="flex-1">
                             <input
                               type="checkbox"
-                              checked={answers.fun.includes(item.k)}
+                              checked={(answers.fun || []).includes(item.k)}
                               onChange={() => toggleArray("fun", item.k)}
                               className="sr-only"
                             />
@@ -640,12 +781,12 @@ export default function AmbassadorSurvey() {
                           </div>
                           <div
                             className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 transition-all flex items-center justify-center ${
-                              answers.fun.includes(item.k)
+                              (answers.fun || []).includes(item.k)
                                 ? "border-yellow-500 bg-yellow-500"
                                 : "border-gray-300"
                             }`}
                           >
-                            {answers.fun.includes(item.k) && (
+                            {(answers.fun || []).includes(item.k) && (
                               <div className="w-2 h-2 bg-white rounded-full"></div>
                             )}
                           </div>
@@ -673,28 +814,46 @@ export default function AmbassadorSurvey() {
                 </div>
               )}
 
-              {step === 6 && (
+              {step === 7 && (
                 <div className="space-y-4 sm:space-y-6 animate-slide-in">
                   <div className="text-center mb-6 sm:mb-8">
                     <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 shadow-lg">
                       <span className="text-xl sm:text-2xl">🎤</span>
                     </div>
                     <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
-                      Speakers & Mentors
+                      Speakers & Program
                     </h2>
                     <p className="text-gray-600 mt-2 text-sm sm:text-base px-2">
-                      Any suggested speakers or mentors we should invite?
+                      Help us plan the perfect camp experience
                     </p>
                   </div>
 
                   <div className="space-y-4">
-                    <textarea
-                      value={answers.speakers}
-                      onChange={(e) => update("speakers", e.target.value)}
-                      placeholder="Names, topics, or 'youth testimonies'..."
-                      className="w-full p-4 sm:p-6 border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:border-teal-500 focus:ring-0 transition-colors resize-none font-medium text-base"
-                      rows={4}
-                    />
+                    <div className="space-y-2 sm:space-y-3">
+                      <label className="text-xs sm:text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                        Suggested Speakers
+                      </label>
+                      <textarea
+                        value={answers.speakers}
+                        onChange={(e) => update("speakers", e.target.value)}
+                        placeholder="Any suggested speakers or mentors we should invite? (Names, topics, or 'youth testimonies'...)"
+                        className="w-full p-4 sm:p-6 border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:border-teal-500 focus:ring-0 transition-colors resize-none font-medium text-base"
+                        rows={3}
+                      />
+                    </div>
+
+                    <div className="space-y-2 sm:space-y-3">
+                      <label className="text-xs sm:text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                        Suggested Program Items
+                      </label>
+                      <textarea
+                        value={answers.programItems}
+                        onChange={(e) => update("programItems", e.target.value)}
+                        placeholder="What activities or program items would you like to see at camp? (Workshops, games, competitions, special events, etc.)"
+                        className="w-full p-4 sm:p-6 border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:border-teal-500 focus:ring-0 transition-colors resize-none font-medium text-base"
+                        rows={3}
+                      />
+                    </div>
                   </div>
 
                   <div className="flex justify-between pt-4">
@@ -716,7 +875,140 @@ export default function AmbassadorSurvey() {
                 </div>
               )}
 
-              {step === 7 && (
+              {step === 8 && (
+                <div className="space-y-4 sm:space-y-6 animate-slide-in">
+                  <div className="text-center mb-6 sm:mb-8">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 shadow-lg">
+                      <span className="text-xl sm:text-2xl">🛠️</span>
+                    </div>
+                    <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
+                      Life Skills
+                    </h2>
+                    <p className="text-gray-600 mt-2 text-sm sm:text-base px-2">
+                      Choose 3 life skills you'd like to develop at camp
+                    </p>
+                  </div>
+
+                  <div className="space-y-3 sm:space-y-4">
+                    {[
+                      {
+                        k: "communication",
+                        t: "Communication & interpersonal skills",
+                        icon: "💬",
+                      },
+                      {
+                        k: "time-management",
+                        t: "Time management & organization",
+                        icon: "⏰",
+                      },
+                      {
+                        k: "financial-literacy",
+                        t: "Financial literacy & budgeting",
+                        icon: "💰",
+                      },
+                      {
+                        k: "problem-solving",
+                        t: "Critical thinking & problem solving",
+                        icon: "🧩",
+                      },
+                      {
+                        k: "emotional-intelligence",
+                        t: "Emotional intelligence & self-awareness",
+                        icon: "🧠",
+                      },
+                      {
+                        k: "conflict-resolution",
+                        t: "Conflict resolution & mediation",
+                        icon: "🤝",
+                      },
+                      {
+                        k: "digital-literacy",
+                        t: "Digital literacy & technology skills",
+                        icon: "💻",
+                      },
+                      {
+                        k: "health-wellness",
+                        t: "Health & wellness management",
+                        icon: "🏃",
+                      },
+                      {
+                        k: "career-planning",
+                        t: "Career planning & goal setting",
+                        icon: "🎯",
+                      },
+                    ].map((item) => (
+                      <label
+                        key={item.k}
+                        className={`group cursor-pointer p-4 sm:p-6 border-2 rounded-xl sm:rounded-2xl transition-all duration-300 block ${
+                          (answers.lifeSkills || []).includes(item.k)
+                            ? "border-indigo-500 bg-indigo-50 shadow-lg transform scale-[1.02]"
+                            : "border-gray-200 hover:border-indigo-300 hover:shadow-md active:scale-[0.98]"
+                        } ${
+                          (answers.lifeSkills || []).length >= 3 && !(answers.lifeSkills || []).includes(item.k)
+                            ? "opacity-50 cursor-not-allowed"
+                            : ""
+                        }`}
+                      >
+                        <div className="flex items-center space-x-3 sm:space-x-4">
+                          <div className="text-xl sm:text-2xl">{item.icon}</div>
+                          <div className="flex-1">
+                            <input
+                              type="checkbox"
+                              checked={(answers.lifeSkills || []).includes(item.k)}
+                              onChange={() => {
+                                if ((answers.lifeSkills || []).includes(item.k) || (answers.lifeSkills || []).length < 3) {
+                                  toggleArray("lifeSkills", item.k);
+                                }
+                              }}
+                              disabled={(answers.lifeSkills || []).length >= 3 && !(answers.lifeSkills || []).includes(item.k)}
+                              className="sr-only"
+                            />
+                            <span className="font-semibold text-gray-800 text-sm sm:text-base leading-tight">
+                              {item.t}
+                            </span>
+                          </div>
+                          <div
+                            className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 transition-all flex items-center justify-center ${
+                              (answers.lifeSkills || []).includes(item.k)
+                                ? "border-indigo-500 bg-indigo-500"
+                                : "border-gray-300"
+                            }`}
+                          >
+                            {(answers.lifeSkills || []).includes(item.k) && (
+                              <div className="w-2 h-2 bg-white rounded-full"></div>
+                            )}
+                          </div>
+                        </div>
+                      </label>
+                    ))}
+                  </div>
+
+                  <div className="text-center p-3 sm:p-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl sm:rounded-2xl">
+                    <p className="text-indigo-800 font-medium text-sm sm:text-base">
+                      Selected: {(answers.lifeSkills || []).length} / 3 skills
+                    </p>
+                  </div>
+
+                  <div className="flex justify-between pt-4">
+                    <button
+                      onClick={prev}
+                      className="flex items-center space-x-2 px-4 sm:px-6 py-3 border-2 border-gray-300 rounded-xl sm:rounded-2xl font-semibold text-gray-700 hover:border-gray-400 transition-colors"
+                    >
+                      <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <span className="text-sm sm:text-base">Back</span>
+                    </button>
+                    <button
+                      onClick={next}
+                      className="flex items-center space-x-2 px-4 sm:px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl sm:rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                    >
+                      <span className="text-sm sm:text-base">Next</span>
+                      <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {step === 9 && (
                 <div className="space-y-4 sm:space-y-6 animate-slide-in">
                   <div className="text-center mb-6 sm:mb-8">
                     <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-gradient-to-br from-pink-500 to-rose-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 shadow-lg">
@@ -732,13 +1024,31 @@ export default function AmbassadorSurvey() {
                   </div>
 
                   <div className="space-y-4">
-                    <textarea
-                      value={answers.hope}
-                      onChange={(e) => update("hope", e.target.value)}
-                      placeholder="Share your hopes and expectations..."
-                      className="w-full p-4 sm:p-6 border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:border-pink-500 focus:ring-0 transition-colors resize-none font-medium text-base"
-                      rows={4}
-                    />
+                    <div className="space-y-2 sm:space-y-3">
+                      <label className="text-xs sm:text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                        Your Hope
+                      </label>
+                      <textarea
+                        value={answers.hope}
+                        onChange={(e) => update("hope", e.target.value)}
+                        placeholder="What do you personally hope to gain from Ambassador Camp 2026?"
+                        className="w-full p-4 sm:p-6 border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:border-pink-500 focus:ring-0 transition-colors resize-none font-medium text-base"
+                        rows={3}
+                      />
+                    </div>
+
+                    <div className="space-y-2 sm:space-y-3">
+                      <label className="text-xs sm:text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                        Any Other Pertinent Issues
+                      </label>
+                      <textarea
+                        value={answers.otherIssues}
+                        onChange={(e) => update("otherIssues", e.target.value)}
+                        placeholder="Is there anything else you'd like us to know? Any concerns, suggestions, or special requirements?"
+                        className="w-full p-4 sm:p-6 border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:border-pink-500 focus:ring-0 transition-colors resize-none font-medium text-base"
+                        rows={3}
+                      />
+                    </div>
                   </div>
 
                   <div className="flex justify-between pt-4">
@@ -770,7 +1080,7 @@ export default function AmbassadorSurvey() {
                 </div>
               )}
 
-              {step === steps.indexOf("finish") && (
+              {step === 10 && (
                 <div className="text-center space-y-6 sm:space-y-8 animate-fade-in">
                   <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto bg-gradient-to-br from-emerald-400 to-green-500 rounded-full flex items-center justify-center shadow-xl">
                     <Award className="w-10 h-10 sm:w-12 sm:h-12 text-white" />
