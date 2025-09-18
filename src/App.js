@@ -1197,10 +1197,17 @@ export default function AmbassadorSurvey() {
                           : "bg-gradient-to-r from-yellow-500 to-orange-500 text-white"
                       }`}
                       onClick={() => {
-                        update("prizeDrawEntry", true);
-                        alert(
-                          "🎉 You're entered in the prize draw! We will contact winners!"
-                        );
+                        const newValue = !answers.prizeDrawEntry;
+                        update("prizeDrawEntry", newValue);
+                        if (newValue) {
+                          alert(
+                            "🎉 You're entered in the prize draw! We will contact winners!"
+                          );
+                        } else {
+                          alert(
+                            "You have been removed from the prize draw."
+                          );
+                        }
                       }}
                     >
                       {answers.prizeDrawEntry
