@@ -306,7 +306,7 @@ export default function AmbassadorSurvey() {
                         onChange={(e) => update("gender", e.target.value)}
                         className="w-full p-4 border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:border-indigo-500 focus:ring-0 transition-colors font-medium text-base"
                       >
-                        <option value="">Prefer not to say</option>
+                        <option value="">Select your gender</option>
                         <option>Male</option>
                         <option>Female</option>
                       </select>
